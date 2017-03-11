@@ -21,13 +21,14 @@
   "scripts": {
     "test": "echo Its Working!",
     "security-check": "nsp check",
-    "open:src": "node buildScripts/srcServer.js",
-    "prestart": "node buildScripts/startMessage.js",
-    "start": "npm run security-check && npm run open:src",
+    "open:src": "babel-node buildScripts/srcServer.js",
+    "prestart": "babel-node buildScripts/startMessage.js",
+    "start": "npm run security-check && npm run open:src && npm run lint:watch",
     "scss": "node-sass --output-style compressed -o dist/css src/scss",
     "autoprefixer": "postcss -u autoprefixer -r dist/css/*",
     "build:css": "npm run scss && npm run autoprefixer",
-    "lint": "eslint src/js",
+    "lint": "esw src buildScripts",
+    "lint:watch": "npm run lint -- --watch",
     "uglify": "mkdir -p dist/js && uglifyjs src/js/*.js -m -o dist/js/app.js",
     "build:js": "npm run lint && npm run uglify",
     "localtunnel": "lt --port 3000",
@@ -40,6 +41,11 @@
   },
   "devDependencies": {
     "autoprefixer": "latest",
+    "babel-cli": "^6.23.0",
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.4.0",
+    "babel-preset-latest": "^6.22.0",
+    "babel-register": "^6.23.0",
     "browser-sync": "^2.18.8",
     "chalk": "latest",
     "eslint": "latest",
@@ -52,6 +58,7 @@
     "open": "latest",
     "parallelshell": "^2.0.0",
     "postcss-cli": "latest",
-    "uglify-js": "latest"
+    "uglify-js": "latest",
+    "webpack": "^2.2.1"
   }
 }
