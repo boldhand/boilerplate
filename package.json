@@ -1,0 +1,57 @@
+{
+  "name": "boilerplate",
+  "version": "1.0.0",
+  "description": "A starting kit",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/boldhand/boilerplate.git"
+  },
+  "keywords": [
+    "Express",
+    "Open",
+    "Scss"
+  ],
+  "author": "Joseph Michel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/boldhand/boilerplate/issues"
+  },
+  "homepage": "https://github.com/boldhand/boilerplate#readme",
+  "scripts": {
+    "test": "echo Its Working!",
+    "security-check": "nsp check",
+    "open:src": "node buildScripts/srcServer.js",
+    "prestart": "node buildScripts/startMessage.js",
+    "start": "npm run security-check && npm run open:src",
+    "scss": "node-sass --output-style compressed -o dist/css src/scss",
+    "autoprefixer": "postcss -u autoprefixer -r dist/css/*",
+    "build:css": "npm run scss && npm run autoprefixer",
+    "lint": "eslint src/js",
+    "uglify": "mkdir -p dist/js && uglifyjs src/js/*.js -m -o dist/js/app.js",
+    "build:js": "npm run lint && npm run uglify",
+    "localtunnel": "lt --port 3000",
+    "share": "open:src && localtunnel",
+    "watch:css": "onchange 'src/scss/*.scss' -- npm run build:css",
+    "watch:js": "onchange 'src/js/*.js' -- npm run build:js",
+    "watch:all": "parallelshell 'npm run serve' 'npm run watch:css'",
+    "serve": "browser-sync start --server --files 'dist/css/*.css, dist/js/*.js'",
+    "postinstall": "npm run watch:all"
+  },
+  "devDependencies": {
+    "autoprefixer": "latest",
+    "browser-sync": "^2.18.8",
+    "chalk": "latest",
+    "eslint": "latest",
+    "eslint-plugin-react": "^6.10.0",
+    "express": "latest",
+    "localtunnel": "latest",
+    "node-sass": "latest",
+    "nsp": "latest",
+    "onchange": "^3.2.1",
+    "open": "latest",
+    "parallelshell": "^2.0.0",
+    "postcss-cli": "latest",
+    "uglify-js": "latest"
+  }
+}
